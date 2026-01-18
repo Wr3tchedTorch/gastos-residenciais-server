@@ -22,12 +22,12 @@ namespace Services
             return await repositoryManager.UsersRepository.GetByIdAsync(id, cancellationToken);
         }
 
-        public async Task<Users> CreateAsync(string Name, uint Age, CancellationToken cancellationToken = default)
+        public async Task<Users> CreateAsync(string name, uint age, CancellationToken cancellationToken = default)
         {            
             Users user = new()
             {
-                Name = Name,
-                Age = Age,
+                Name = name,
+                Age = age,
             };
 
             repositoryManager.UsersRepository.Insert(user);

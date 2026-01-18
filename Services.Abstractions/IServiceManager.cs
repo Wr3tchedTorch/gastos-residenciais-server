@@ -9,5 +9,6 @@ namespace Services.Abstractions
     public interface IServiceManager
     {
         IUsersService UsersService { get; }
+        ICategoriesService CategoriesService { get; }
     }
 }

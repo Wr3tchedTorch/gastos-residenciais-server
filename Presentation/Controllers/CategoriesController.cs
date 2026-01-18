@@ -19,12 +19,24 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok();
+            List<Categories> categories = await _serviceManager.CategoriesService.GetAllAsync();
+
+            return Ok(categories);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(string description, ExpenseType expenseType)
         {
+            Categories category = await _serviceManager.CategoriesService.CreateAsync(description, expenseType);
+
+            return Ok(category);
+        }
+
+        [HttpDelete("id")]
+        public async Task<IActionResult> Delete([FromQuery] int id)
+        {
+            await _serviceManager.CategoriesService.DeleteAsync(id);
+
             return Ok();
         }
     }

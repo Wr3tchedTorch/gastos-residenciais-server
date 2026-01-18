@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Exceptions.Categories;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,6 +24,14 @@ namespace Persistence.Repositories
             var categories = await dbContext.Categories.ToListAsync(cancellationToken);
 
             return categories;
+        }
+
+        public async Task<Categories> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var category = await dbContext.Categories.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken: cancellationToken)
+                ?? throw new CategoryNotFoundException(id);
+
+            return category;
         }
 
         public void Insert(Categories newUser)
