@@ -1,21 +1,19 @@
-﻿using Domain.Enums;
+﻿using Domain.Entities;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Domain.DataTransferObjects.Transactions
 {
-    public class Transactions
+    public class TransactionsForCreationDTO
     {
-        public int Id { get; set; }
         public string Description { get; set; } = null!;
         public double Value { get; set; }
         public UniqueExpenseType ExpenseType { get; set; }
         public int CategoryId { get; set; }
-        public Categories Category { get; set; } = null!;
         public int UserId { get; set; }
-        public Users User { get; set; } = null!;
     }
 }

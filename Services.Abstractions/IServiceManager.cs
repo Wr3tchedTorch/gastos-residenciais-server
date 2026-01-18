@@ -10,5 +10,6 @@ namespace Services.Abstractions
     {
         IUsersService UsersService { get; }
         ICategoriesService CategoriesService { get; }
+        ITransactionsService TransactionsService { get; }
     }
 }
