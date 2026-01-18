@@ -15,7 +15,7 @@ namespace Persistence.Extensions
         {
             using IServiceScope scope = app.ApplicationServices.CreateScope();
 
-            using GerenciamentoDeGastosDatabaseContext context = scope.ServiceProvider.GetRequiredService<GerenciamentoDeGastosDatabaseContext>();
+            using ExpensesManagementDatabaseContext context = scope.ServiceProvider.GetRequiredService<ExpensesManagementDatabaseContext>();
 
             context.Database.Migrate();
         }
