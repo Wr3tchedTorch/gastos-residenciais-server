@@ -12,8 +12,10 @@ namespace Persistence.Repositories
     {
         private readonly Lazy<IUsersRepository> lazyUsersRepository = new(() => new UsersRepository(dbContext));
         private readonly Lazy<IUnitOfWork> lazyUnitOfWork = new(() => new UnitOfWork(dbContext));
+        private readonly Lazy<ICategoriesRepository> lazyCategoriesRepository = new(() => new CategoriesRepository(dbContext));
 
         public IUsersRepository UsersRepository => lazyUsersRepository.Value;
         public IUnitOfWork UnitOfWork => lazyUnitOfWork.Value;
+        public ICategoriesRepository CategoriesRepository => lazyCategoriesRepository.Value;
     }
 }

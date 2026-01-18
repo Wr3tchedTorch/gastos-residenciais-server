@@ -9,6 +9,7 @@ namespace Persistence
         public DbContextOptions<ExpensesManagementDatabaseContext> Options { get; } = options;
 
         public DbSet<Users> Users { get; set; }
+        public DbSet<Categories> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

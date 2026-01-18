@@ -12,6 +12,7 @@ using Persistence.Extensions;
 using Persistence.Repositories;
 using Services;
 using Services.Abstractions;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +35,11 @@ builder.Services.AddDbContextPool<ExpensesManagementDatabaseContext>(b =>
 });
 
 builder.Services.AddControllers()
-.AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    })
+    .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 
 builder.Logging.AddConsole();
 

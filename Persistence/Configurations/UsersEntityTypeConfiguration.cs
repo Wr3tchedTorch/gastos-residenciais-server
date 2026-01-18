@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Configurations
 {
-    public class UserEntityTypeConfiguration : IEntityTypeConfiguration<Users>
+    public class UsersEntityTypeConfiguration : IEntityTypeConfiguration<Users>
     {
         public void Configure(EntityTypeBuilder<Users> builder)
         {
