@@ -21,35 +21,35 @@ namespace Persistence.Migrations
                     Value = table.Column<double>(type: "double", nullable: false),
                     ExpenseType = table.Column<string>(type: "ENUM('Despesa','Receita')", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    CategoriesId = table.Column<int>(type: "int", nullable: true),
-                    UsersId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_Categories_CategoriesId",
-                        column: x => x.CategoriesId,
+                        name: "FK_Transactions_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Transactions_Users_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_Transactions_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_CategoriesId",
+                name: "IX_Transactions_CategoryId",
                 table: "Transactions",
-                column: "CategoriesId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_UsersId",
+                name: "IX_Transactions_UserId",
                 table: "Transactions",
-                column: "UsersId");
+                column: "UserId");
         }
 
         /// <inheritdoc />

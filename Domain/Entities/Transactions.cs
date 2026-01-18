@@ -23,8 +23,8 @@ namespace Domain.Entities
         public double Value { get; set; }
         public UniqueExpenseType ExpenseType { get; set; }
         public int CategoryId { get; set; }
-        Categories Category { get; set; } = null!;
+        public Categories Category { get; set; } = null!;
         public int UserId { get; set; }
-        Users User { get; set; } = null!;
+        public Users User { get; set; } = null!;
     }
 }

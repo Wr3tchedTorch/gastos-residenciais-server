@@ -9,10 +9,15 @@ using System.Threading.Tasks;
 
 namespace Persistence.Configurations
 {
-    public class UsersEntityTypeConfiguration : IEntityTypeConfiguration<Users>
+    internal class UsersEntityTypeConfiguration : IEntityTypeConfiguration<Users>
     {
         public void Configure(EntityTypeBuilder<Users> builder)
         {
+            builder
+                .HasMany(e => e.Transactions)
+                .WithOne(e => e.User)
+                .HasForeignKey(e => e.UserId)
+                .HasPrincipalKey(e => e.Id);
         }
     }
 }
