@@ -24,7 +24,7 @@ namespace Persistence.Repositories
         public async Task<Users> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var user = await context.Users.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken: cancellationToken)
-                ?? throw new CategoryNotFoundException(id);
+                ?? throw new UserNotFoundException(id);
 
             return user;
         }
