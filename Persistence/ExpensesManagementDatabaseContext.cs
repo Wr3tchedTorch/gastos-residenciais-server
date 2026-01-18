@@ -10,6 +10,7 @@ namespace Persistence
 
         public DbSet<Users> Users { get; set; }
         public DbSet<Categories> Categories { get; set; }
+        public DbSet<Transactions> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

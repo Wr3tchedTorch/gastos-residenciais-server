@@ -12,5 +12,7 @@ namespace Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public uint Age { get; set; }
+
+        public List<Transactions> Transactions { get; set; } = null!;
     }
 }

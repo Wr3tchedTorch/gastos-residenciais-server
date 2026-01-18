@@ -1,5 +1,5 @@
-﻿using Domain;
-using Domain.Entities;
+﻿using Domain.Entities;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;
 using System;
