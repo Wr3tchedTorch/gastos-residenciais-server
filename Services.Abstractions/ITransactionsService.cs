@@ -11,8 +11,8 @@ namespace Services.Abstractions
 {
     public interface ITransactionsService
     {
-        public Task<List<Transactions>> GetAllAsync(CancellationToken cancellationToken = default);
-        public Task<Transactions> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        public Task<List<TransactionDTO>> GetAllAsync(CancellationToken cancellationToken = default);
+        public Task<TransactionDTO> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         public Task<Transactions> CreateAsync(
             TransactionForCreationDTO body,
             CancellationToken cancellationToken = default);

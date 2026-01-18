@@ -47,14 +47,14 @@ namespace Services
             await repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<List<Transactions>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<List<TransactionDTO>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await repositoryManager.TransactionsRepository.GetAllAsync(cancellationToken);
         }
 
-        public async Task<Transactions> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<TransactionDTO> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await repositoryManager.TransactionsRepository.GetByIdAsync(id, cancellationToken);
+            return await repositoryManager.TransactionsRepository.GetDtoByIdAsync(id, cancellationToken);
         }
 
         public async Task UpdateAsync(int id, TransactionForUpdateDTO body, CancellationToken cancellationToken = default)

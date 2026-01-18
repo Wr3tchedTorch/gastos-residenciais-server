@@ -19,7 +19,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            List<Transactions> transactions = await _serviceManager.TransactionsService.GetAllAsync();
+            List<TransactionDTO> transactions = await _serviceManager.TransactionsService.GetAllAsync();
 
             return Ok(transactions);
         }
@@ -27,7 +27,7 @@ namespace Presentation.Controllers
         [HttpGet("id")]
         public async Task<IActionResult> GetById([FromQuery] int id)
         {
-            Transactions transaction = await _serviceManager.TransactionsService.GetByIdAsync(id);
+            TransactionDTO transaction = await _serviceManager.TransactionsService.GetByIdAsync(id);
 
             return Ok(transaction);
         }

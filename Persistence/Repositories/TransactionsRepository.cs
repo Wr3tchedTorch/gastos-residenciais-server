@@ -1,4 +1,7 @@
-﻿using Domain.Entities;
+﻿using Domain.DataTransferObjects.Categories;
+using Domain.DataTransferObjects.Transactions;
+using Domain.DataTransferObjects.Users;
+using Domain.Entities;
 using Domain.Exceptions.Transactions;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -19,15 +22,30 @@ namespace Persistence.Repositories
             this.dbContext = dbContext;
         }
 
-        public async Task<List<Transactions>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<List<TransactionDTO>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await dbContext.Transactions.ToListAsync(cancellationToken);
+            return await dbContext.Transactions
+                .Select(TransactionDTOMappings.ToDto)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<TransactionDTO> GetDtoByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var transaction = await dbContext.Transactions
+                .Where(x => x.Id == id)
+                .Select(TransactionDTOMappings.ToDto)
+                .FirstOrDefaultAsync(cancellationToken)
+            ?? throw new TransactionNotFoundException(id);
+
+            return transaction;
         }
 
         public async Task<Transactions> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            var transaction = await dbContext.Transactions.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken)
-                ?? throw new TransactionNotFoundException(id);
+            var transaction = await dbContext.Transactions
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync(cancellationToken)
+            ?? throw new TransactionNotFoundException(id);
 
             return transaction;
         }
@@ -40,6 +58,11 @@ namespace Persistence.Repositories
         public void Remove(Transactions transaction)
         {
             dbContext.Transactions.Remove(transaction);
+        }
+
+        Task<Transactions> ITransactionsRepository.GetByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }
