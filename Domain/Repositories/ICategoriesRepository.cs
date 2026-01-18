@@ -11,7 +11,7 @@ namespace Domain.Repositories
     {
         public Task<List<Categories>> GetAllAsync(CancellationToken cancellationToken = default);
         public Task<Categories> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-        public void Insert(Categories newUser);
-        public void Remove(Categories user);
+        public void Insert(Categories newCategory);
+        public void Remove(Categories category);
     }
 }

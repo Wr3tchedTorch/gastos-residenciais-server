@@ -34,14 +34,14 @@ namespace Persistence.Repositories
             return category;
         }
 
-        public void Insert(Categories newUser)
+        public void Insert(Categories newCategory)
         {
-            dbContext.Categories.Add(newUser);
+            dbContext.Categories.Add(newCategory);
         }
 
-        public void Remove(Categories user)
+        public void Remove(Categories category)
         {
-            dbContext.Categories.Remove(user);
+            dbContext.Categories.Remove(category);
         }
     }
 }

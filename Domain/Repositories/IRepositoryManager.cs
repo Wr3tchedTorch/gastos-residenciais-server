@@ -11,5 +11,6 @@ namespace Domain.Repositories
         IUsersRepository UsersRepository { get; }
         IUnitOfWork UnitOfWork { get; }
         ICategoriesRepository CategoriesRepository { get; }
+        ITransactionsRepository TransactionsRepository { get; }
     }
 }
