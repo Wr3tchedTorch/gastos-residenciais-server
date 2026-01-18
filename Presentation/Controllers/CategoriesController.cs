@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Services.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,14 @@ namespace Presentation.Controllers
             return Ok(categories);
         }
 
+        [HttpGet("id")]
+        public async Task<IActionResult> GetById([FromQuery] int id)
+        {
+            Categories category = await _serviceManager.CategoriesService.GetByIdAsync(id);
+
+            return Ok(category);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(string description, ExpenseType expenseType)
         {
@@ -36,6 +45,14 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
             await _serviceManager.CategoriesService.DeleteAsync(id);
+
+            return Ok();
+        }
+
+        [HttpPatch("id")]
+        public async Task<IActionResult> Update([FromQuery] int id, string description)
+        {
+            await _serviceManager.CategoriesService.UpdateAsync(id, description);
 
             return Ok();
         }

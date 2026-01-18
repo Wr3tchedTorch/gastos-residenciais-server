@@ -11,7 +11,9 @@ namespace Services.Abstractions
     public interface ICategoriesService
     {
         public Task<List<Categories>> GetAllAsync(CancellationToken cancellationToken = default);
+        public Task<Categories> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         public Task<Categories> CreateAsync(string description, ExpenseType expenseType, CancellationToken cancellationToken = default);
         public Task DeleteAsync(int id, CancellationToken cancellationToken = default);
+        public Task UpdateAsync(int id, string description, CancellationToken cancellationToken = default);
     }
 }

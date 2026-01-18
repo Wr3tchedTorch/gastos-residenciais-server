@@ -21,14 +21,14 @@ namespace Persistence.Repositories
 
         public async Task<List<Categories>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var categories = await dbContext.Categories.ToListAsync(cancellationToken);
+            var categories = await dbContext.Categories.Include(x => x.Transactions).ToListAsync(cancellationToken);
 
             return categories;
         }
 
         public async Task<Categories> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            var category = await dbContext.Categories.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken: cancellationToken)
+            var category = await dbContext.Categories.Where(x => x.Id == id).Include(x => x.Transactions).FirstOrDefaultAsync(cancellationToken: cancellationToken)
                 ?? throw new CategoryNotFoundException(id);
 
             return category;

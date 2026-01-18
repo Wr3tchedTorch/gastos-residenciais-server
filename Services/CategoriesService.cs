@@ -47,5 +47,19 @@ namespace Services
         {
             return await repositoryManager.CategoriesRepository.GetAllAsync(cancellationToken);
         }
+
+        public async Task<Categories> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await repositoryManager.CategoriesRepository.GetByIdAsync(id, cancellationToken);
+        }
+
+        public async Task UpdateAsync(int id, string description, CancellationToken cancellationToken = default)
+        {
+            var category = await repositoryManager.CategoriesRepository.GetByIdAsync(id, cancellationToken);
+
+            category.Description = description;
+
+            await repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
+        }
     }
 }
