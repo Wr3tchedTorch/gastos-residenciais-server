@@ -1,6 +1,7 @@
 using Domain.Entities;
 using Domain.Repositories;
 using gastos_residenciais_server.Middleware;
+using Mapster;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,6 +14,8 @@ using Persistence.Repositories;
 using Services;
 using Services.Abstractions;
 using System.Text.Json.Serialization;
+
+TypeAdapterConfig.GlobalSettings.Scan(typeof(Persistence.AssemblyReference).Assembly);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +41,7 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
     })
     .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 

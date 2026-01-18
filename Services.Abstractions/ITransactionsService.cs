@@ -14,12 +14,12 @@ namespace Services.Abstractions
         public Task<List<Transactions>> GetAllAsync(CancellationToken cancellationToken = default);
         public Task<Transactions> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         public Task<Transactions> CreateAsync(
-            TransactionsForCreationDTO body,
+            TransactionForCreationDTO body,
             CancellationToken cancellationToken = default);
         public Task DeleteAsync(int id, CancellationToken cancellationToken = default);
         public Task UpdateAsync(
             int id,
-            TransactionsForUpdateDTO body,
+            TransactionForUpdateDTO body,
             CancellationToken cancellationToken = default);
     }
 }

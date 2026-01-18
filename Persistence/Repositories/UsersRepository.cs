@@ -16,14 +16,14 @@ namespace Persistence.Repositories
 
         public async Task<List<Users>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var users = await context.Users.ToListAsync(cancellationToken: cancellationToken);
+            var users = await context.Users.Include(x => x.Transactions).ToListAsync(cancellationToken: cancellationToken);
 
             return users;
         }
 
         public async Task<Users> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            var user = await context.Users.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken: cancellationToken)
+            var user = await context.Users.Where(x => x.Id == id).Include(x => x.Transactions).FirstOrDefaultAsync(cancellationToken: cancellationToken)
                 ?? throw new UserNotFoundException(id);
 
             return user;

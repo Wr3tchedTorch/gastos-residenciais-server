@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.DataTransferObjects.Transactions
 {
-    public class TransactionsForUpdateDTO
+    public class TransactionForUpdateDTO
     {
         public string? Description { get; set; }
         public double? Value { get; set; }
