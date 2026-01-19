@@ -21,19 +21,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 var myCorsPolicyName = "AllowFrontend";
 
-if (builder.Environment.IsDevelopment())
+builder.Services.AddCors(options =>
 {
-    builder.Services.AddCors(options =>
+    options.AddPolicy(myCorsPolicyName, policy =>
     {
-        options.AddPolicy(myCorsPolicyName, policy =>
-        {
-            policy.WithOrigins("http://localhost:5173", "https://localhost:5173")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials();
-        });
+        policy.WithOrigins("http://localhost:5173", "https://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
     });
-}
+});
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationScheme);
@@ -82,10 +79,7 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseCors(myCorsPolicyName);
-}
+app.UseCors(myCorsPolicyName);
 
 app.UseAuthentication();
 app.UseAuthorization();

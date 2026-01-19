@@ -29,14 +29,14 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string Name, uint Age)
+        public async Task<IActionResult> Create([FromBody] UserForCreationDTO body)
         {
-            Users user = await _serviceManager.UsersService.CreateAsync(Name, Age);
+            Users user = await _serviceManager.UsersService.CreateAsync(body.Name, body.Age);
 
             return Ok(user);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
             await _serviceManager.UsersService.DeleteAsync(id);
@@ -44,7 +44,7 @@ namespace Presentation.Controllers
             return Ok();
         }
 
-        [HttpPatch("id")]
+        [HttpPatch]
         public async Task<IActionResult> Update([FromQuery] int id, string? name, uint? age)
         {
             await _serviceManager.UsersService.UpdateAsync(id, name, age);
