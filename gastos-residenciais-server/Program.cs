@@ -19,6 +19,22 @@ TypeAdapterConfig.GlobalSettings.Scan(typeof(Persistence.AssemblyReference).Asse
 
 var builder = WebApplication.CreateBuilder(args);
 
+var myCorsPolicyName = "AllowFrontend";
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(myCorsPolicyName, policy =>
+        {
+            policy.WithOrigins("http://localhost:5173", "https://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+    });
+}
+
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationScheme);
 
@@ -66,8 +82,13 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+if (app.Environment.IsDevelopment())
+{
+    app.UseCors(myCorsPolicyName);
+}
+
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

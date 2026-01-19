@@ -1,5 +1,8 @@
-﻿using Domain.Entities;
+﻿using Domain.DataTransferObjects.Transactions;
+using Domain.DataTransferObjects.Users;
+using Domain.Entities;
 using Domain.Repositories;
+using Mapster;
 using Services.Abstractions;
 
 namespace Services
@@ -12,14 +15,45 @@ namespace Services
         {
             this.repositoryManager = repositoryManager;
         }
-        public async Task<List<Users>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<UsersListDTO> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await repositoryManager.UsersRepository.GetAllAsync(cancellationToken);
+            var users = await repositoryManager.UsersRepository.GetAllAsync(cancellationToken);
+
+            UsersListDTO usersListDto = new();
+
+            usersListDto.Users = [.. users
+                    .Select(user =>
+                    {
+                        UserDTO userDto = new();
+
+                        user.Adapt(userDto);
+                        userDto.Transactions = user.Transactions.Adapt<List<TransactionSummaryDTO>>();
+
+                        userDto = CalculateBalanceInformation(userDto);
+
+                        usersListDto.TotalExpenses += userDto.TotalExpenses;
+                        usersListDto.TotalIncome   += userDto.TotalIncome;
+                        usersListDto.TotalBalance  += userDto.TotalBalance;
+
+                        return userDto;
+                    })];
+
+            usersListDto.TotalBalance = usersListDto.TotalIncome - usersListDto.TotalExpenses;
+
+            return usersListDto;
         }
 
-        public async Task<Users> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<UserDTO> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await repositoryManager.UsersRepository.GetByIdAsync(id, cancellationToken);
+            var user = await repositoryManager.UsersRepository.GetByIdAsync(id, cancellationToken);
+
+            UserDTO userDto = user.Adapt<UserDTO>();
+
+            CalculateBalanceInformation(userDto);
+
+            userDto.TotalBalance = userDto.TotalIncome - userDto.TotalExpenses;
+
+            return userDto;
         }
 
         public async Task<Users> CreateAsync(string name, uint age, CancellationToken cancellationToken = default)
@@ -60,6 +94,35 @@ namespace Services
             }
 
             await repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
+        }
+
+        private void CalculateBalanceInformation(UserDTO user, UsersListDTO usersListDto)
+        {
+            CalculateBalanceInformation(user);
+
+            usersListDto.TotalExpenses += user.TotalExpenses;
+            usersListDto.TotalIncome  +=  user.TotalIncome;
+        }
+
+        private UserDTO CalculateBalanceInformation(UserDTO user)
+        {
+            if (user.Transactions == null || user.Transactions.Count == 0)
+            {
+                user.TotalExpenses = 0;
+                user.TotalIncome = 0;
+
+                return user;
+            }
+
+            user.TotalExpenses = user.Transactions
+                .Where(t => t.ExpenseType == Domain.Enums.UniqueExpenseType.Despesa)
+                .Sum(t => t.Value);
+
+            user.TotalIncome = user.Transactions
+                .Where(t => t.ExpenseType == Domain.Enums.UniqueExpenseType.Receita)
+                .Sum(t => t.Value);
+
+            return user;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.DataTransferObjects.Users;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;
@@ -14,7 +15,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            List<Users> users = await _serviceManager.UsersService.GetAllAsync();
+            UsersListDTO users = await _serviceManager.UsersService.GetAllAsync();
 
             return Ok(users);
         }
@@ -22,7 +23,7 @@ namespace Presentation.Controllers
         [HttpGet("id")]
         public async Task<IActionResult> GetById([FromQuery] int id)
         {
-            Users user = await _serviceManager.UsersService.GetByIdAsync(id);
+            UserDTO user = await _serviceManager.UsersService.GetByIdAsync(id);
 
             return Ok(user);
         }

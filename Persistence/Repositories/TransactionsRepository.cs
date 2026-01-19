@@ -59,10 +59,5 @@ namespace Persistence.Repositories
         {
             dbContext.Transactions.Remove(transaction);
         }
-
-        Task<Transactions> ITransactionsRepository.GetByIdAsync(int id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
