@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.DataTransferObjects.Categories;
+using Domain.Entities;
 using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
@@ -34,9 +35,9 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string description, ExpenseType expenseType)
+        public async Task<IActionResult> Create(CategoryForCreationDTO body)
         {
-            Categories category = await _serviceManager.CategoriesService.CreateAsync(description, expenseType);
+            Categories category = await _serviceManager.CategoriesService.CreateAsync(body.Description, body.ExpenseType);
 
             return Ok(category);
         }
