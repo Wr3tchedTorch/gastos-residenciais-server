@@ -96,14 +96,6 @@ namespace Services
             await repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
 
-        private void CalculateBalanceInformation(UserDTO user, UsersListDTO usersListDto)
-        {
-            CalculateBalanceInformation(user);
-
-            usersListDto.TotalExpenses += user.TotalExpenses;
-            usersListDto.TotalIncome  +=  user.TotalIncome;
-        }
-
         private UserDTO CalculateBalanceInformation(UserDTO user)
         {
             if (user.Transactions == null || user.Transactions.Count == 0)
@@ -121,6 +113,8 @@ namespace Services
             user.TotalIncome = user.Transactions
                 .Where(t => t.ExpenseType == Domain.Enums.UniqueExpenseType.Receita)
                 .Sum(t => t.Value);
+
+            user.TotalBalance = user.TotalIncome - user.TotalExpenses;
 
             return user;
         }
