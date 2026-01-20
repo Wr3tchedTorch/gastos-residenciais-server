@@ -42,7 +42,7 @@ namespace Presentation.Controllers
             return Ok(category);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
             await _serviceManager.CategoriesService.DeleteAsync(id);

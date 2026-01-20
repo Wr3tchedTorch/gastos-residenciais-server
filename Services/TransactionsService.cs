@@ -23,7 +23,7 @@ namespace Services
             this.repositoryManager = repositoryManager;
         }
 
-        public async Task<Transactions> CreateAsync(TransactionForCreationDTO body, CancellationToken cancellationToken = default)
+        public async Task<TransactionDTO> CreateAsync(TransactionForCreationDTO body, CancellationToken cancellationToken = default)
         {
             await CheckValidCategory(body.CategoryId, body.ExpenseType, cancellationToken);
 
@@ -35,7 +35,7 @@ namespace Services
 
             await repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-            return newTransaction;
+            return await GetByIdAsync(newTransaction.Id, cancellationToken);
         }
 
         public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)

@@ -13,7 +13,7 @@ namespace Services.Abstractions
     {
         public Task<List<TransactionDTO>> GetAllAsync(CancellationToken cancellationToken = default);
         public Task<TransactionDTO> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-        public Task<Transactions> CreateAsync(
+        public Task<TransactionDTO> CreateAsync(
             TransactionForCreationDTO body,
             CancellationToken cancellationToken = default);
         public Task DeleteAsync(int id, CancellationToken cancellationToken = default);

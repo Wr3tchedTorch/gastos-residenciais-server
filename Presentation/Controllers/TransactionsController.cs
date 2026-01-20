@@ -35,12 +35,12 @@ namespace Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TransactionForCreationDTO body)
         {
-            Transactions transaction = await _serviceManager.TransactionsService.CreateAsync(body);
+            TransactionDTO transaction = await _serviceManager.TransactionsService.CreateAsync(body);
 
             return Ok(transaction);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
             await _serviceManager.TransactionsService.DeleteAsync(id);
