@@ -2,17 +2,17 @@
 # Website para gastos residenciais
 
 ### Sumário
-  * [Descrição](#descrição)
+  * [Descrição do Projeto](#descrição-do-projeto)
   * [Frontend](#frontend)
   * [Stack utilizada](#stack-utilizada)
   * [Instalação](#instalação)
-  * [Documentação](#documentação)
+  * [Detalhes Técnicos](#detalhes-técnicos)
   * [Screenshots](#screenshots)
     + [Tela do Swagger exibindo os endpoints de categoria](#tela-do-swagger-exibindo-os-endpoints-de-categoria)
     + [Tela do Swagger exibindo os endpoints de transação](#tela-do-swagger-exibindo-os-endpoints-de-transação)
   * [Licença](#licença)
 
-# Descrição
+# Descrição do Projeto
 
 Esse repositório armazena o código-fonte do backend (ou seja, o *server*) para um aplicativo web de gerenciamento de gastos residênciais. 
 
@@ -89,7 +89,7 @@ Ou pelo Frontend:
 
 [Guia de instalação do frontend](https://github.com/Wr3tchedTorch/gastos-residenciais-client?tab=readme-ov-file#instala%C3%A7%C3%A3o)
 
-## Documentação
+## Detalhes Técnicos
 
 Esse projeto foi desenvolvido utilizando .NET como framework e C# como linguagem de programação. Pois são ferramentas simples, robustas e eficiêntes. O principal foco do desenvolvimento foi em performance e organização do código, que segue uma estrutura baseada em camadas conhecida como arquitetura ONION.
 
